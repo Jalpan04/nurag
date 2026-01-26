@@ -1,45 +1,33 @@
 # Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
+*.pyc
+*.pyo
+*.pyd
 .Python
 env/
 venv/
-.venv/
-*.egg-info/
-dist/
-build/
-
-# Database
-*.db
-*.sqlite3
-
-# ChromaDB
-chroma_db/
-
-# Environment
 .env
-.env.local
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Database & Storage
+rag_app.db
+chroma_db/
+rag_chroma_data/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Docker volumes (local)
-rag_chroma_data/
+# IDE
+.vscode/
+.idea/
 
-# Node
-node_modules/
-
-# Logs
-*.log
-
-# Artifacts/Brain (Agent workspace)
-.gemini/
+# Docker
+docker-compose.override.yml
