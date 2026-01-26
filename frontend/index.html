@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NURAG</title>
+    <!-- JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="//unpkg.com/force-graph"></script>
+    
+    <!-- Utilities -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <!-- 1. The Texture: Film Grain (Static Overlay) -->
+    <div class="noise-overlay"></div>
+
+    <!-- 2. The Background: Mesh Gradients (Subtle) -->
+    <div class="mesh-gradient mesh-teal"></div>
+    <div class="mesh-gradient mesh-violet"></div>
+    <div class="mesh-gradient mesh-orange"></div>
+
+    <!-- 3. Scanline Animation -->
+    <div class="scanline"></div>
+
+    <!-- 4. Background Visualization: Force Graph (Retained but styled to Wireframe) -->
+    <div id="graph-container"></div>
+
+    <!-- Main Grid Layout -->
+    <div class="main-grid">
+        <!-- A. Heads Up Display (Header) -->
+        <header class="hud-header">
+            <div class="hud-left">
+                <span class="brand-name">NURAG</span>
+            </div>
+            <div class="hud-right">
+                <span class="status-item">LATENCY: <span id="latency">12ms</span></span>
+                <span class="status-separator">|</span>
+                <span class="status-item">STATUS: <span class="status-online">ONLINE</span></span>
+            </div>
+        </header>
+
+        <!-- Sidebar: Archive (History) -->
+        <aside class="sidebar-left">
+            <div class="sidebar-header">[ARCHIVE]</div>
+            <button id="new-chat-btn" class="sidebar-btn">+ NEW_THREAD</button>
+            <div id="history-list" class="history-list">
+                <!-- Injected via JS -->
+            </div>
+        </aside>
+
+        <!-- B. Chat Interface (Terminal Log) -->
+        <main class="terminal-interface">
+            <div class="terminal-log" id="messages-container">
+                <!-- System Init Message -->
+                <div class="log-entry system">
+                    <span class="prefix">[SYSTEM] ::</span> <span class="content">Core initialized. Connected to Brain.</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Panel: Control Deck -->
+        <aside class="sidebar-right">
+            <div class="sidebar-header">[SYSTEM_CONFIG]</div>
+            
+            <!-- TABS -->
+            <div class="tabs-header">
+                <button id="tab-btn-agents" class="tab-btn active">[AGENTS]</button>
+                <div class="tab-separator">|</div>
+                <button id="tab-btn-memory" class="tab-btn">[MEMORY]</button>
+            </div>
+
+            <!-- TAB: AGENTS -->
+            <div id="tab-agents" class="tab-content active">
+                <div id="agent-view-mode">
+                    <div class="section-title">ACTIVE_PERSONA</div>
+                    <select id="agent-select" class="retro-select">
+                        <!-- Injected via JS -->
+                    </select>
+                    <button id="edit-agent-btn" class="sidebar-action-btn">> EDIT_CONFIGURATION</button>
+                    <button id="create-agent-btn" class="sidebar-action-btn" style="margin-top:0.5rem;">+ NEW_PERSONA</button>
+                </div>
+
+                <div id="agent-edit-mode" class="hidden">
+                    <div class="section-title">CONFIG_EDITOR</div>
+                    <input type="text" id="agent-name-input" class="retro-input" placeholder="AGENT_NAME">
+                    
+                    <div style="margin-bottom:0.5rem;">
+                        <label style="color:var(--mid-grey); font-size:0.75rem; display:block; margin-bottom:0.25rem;">BASE_MODEL</label>
+                        <select id="agent-model-select" class="retro-select">
+                            <!-- Injected via JS -->
+                        </select>
+                    </div>
+
+                    <textarea id="agent-prompt-input" class="retro-textarea" placeholder="SYSTEM_PROMPT..."></textarea>
+                    <div class="edit-actions">
+                        <button id="save-agent-btn" class="sidebar-action-btn action-save">[SAVE]</button>
+                        <button id="cancel-agent-btn" class="sidebar-action-btn action-cancel">[CANCEL]</button>
+                    </div>
+                    <button id="delete-agent-btn" class="sidebar-action-btn action-delete" style="border-color: #cc0000; color: #cc0000; margin-top: 1rem;">[DELETE_PERSONA]</button>
+                </div>
+            </div>
+
+            <div id="tab-memory" class="tab-content hidden">
+                <div class="memory-hud">
+                    <div class="stat-box">
+                        <div class="stat-label">NODES</div>
+                        <div class="stat-value" id="stat-nodes">--</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">CAPACITY</div>
+                        <div class="stat-value">UNLIMITED</div>
+                    </div>
+                </div>
+
+                <div class="upload-zone" id="drop-zone">
+                    <div class="zone-icon">⇩</div>
+                    <div class="zone-text">DRAG_DATA_PACKET</div>
+                    <div class="zone-sub">OR CLICK TO UPLOAD</div>
+                    <input type="file" id="file-input" hidden multiple>
+                </div>
+
+                <div class="section-title" style="margin-top: 1.5rem;">STORED_ENGRAMS</div>
+                <div id="docs-list" class="memory-grid">
+                    <!-- Injected via JS -->
+                </div>
+                
+
+            </div>
+        </aside>
+
+        <!-- C. Input Field (Command Line) -->
+        <footer class="command-line">
+            <div class="cmd-prompt">root@neuralrag:~$</div>
+            <textarea id="chat-input" placeholder="Enter command or query... (Shift+Enter for newline)" rows="1"></textarea>
+            <button id="send-btn">[EXECUTE]</button>
+        </footer>
+    </div>
+    <!-- Modal Removed -->
+    <script src="script.js?v=clean"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+      - rag_chroma_data:/app/chroma_db
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - CHROMA_DB_DIR=/app/chroma_db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/app
+    command: node server.js
+    depends_on:
+      - backend
+
+volumes:
+  rag_chroma_data:
