@@ -1,5 +1,7 @@
 # NURAG
 
+![GitHub top language](https://img.shields.io/github/languages/top/Jalpan04/nurag) ![GitHub repo size](https://img.shields.io/github/repo-size/Jalpan04/nurag) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-0.2-1C3C3C?style=flat-square&logo=langchain&logoColor=white)
